@@ -9,7 +9,7 @@ def get_all_tables():
     # print(tables)
     ret = ""
     for x in tables:
-        ret += str(x)
+        ret += str(x['data-app-js'])
     return ret
 
 print(get_all_tables())
