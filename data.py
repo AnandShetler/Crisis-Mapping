@@ -6,10 +6,9 @@ def get_all_tables():
     page = requests.get("https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/")
     soup = BeautifulSoup(page.content, features="html.parser")
     tables = soup.find_all('div', attrs={'data-app-js':re.compile("[\{]")})
-    # print(tables)
-    ret = ""
+    ret = []
     for x in tables:
-        ret += str(x['data-app-js'])
+        ret.append(x['data-app-js'])
     return ret
 
-print(get_all_tables())
+# print(get_all_tables())
