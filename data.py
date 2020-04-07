@@ -7,4 +7,4 @@ def get_sheet_data(spreadsheet_id, range_):
     service = discovery.build('sheets', 'v4', credentials=credentials)
     request = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_)
     response = request.execute()
-    return response
+    return response['values']
