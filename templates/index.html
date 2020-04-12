@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<head>
+<html>
+<head>                                                  <!--API 2 used**--> 
     <title>Crisis Response Mapping</title>
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        #map {
+            height:400px
+        }
+        html, body {
+            height:400px;
+            margin:0;
+            padding:0;
+        }
+    </style>   
 </head>
 <body style="background-color:#1a8cff;">
-    <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="42" width ="42">
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
     <h1>Crisis Response Mapping</h1>
+    
+    <div id="map"></div>
+    <script>
+        function initMap() {        
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 40, lng:-100},
+            zoom:4,
+            styles: mapStyle
+        });
+        var mapStyle =[{
+            'featureType':'all',
+            'elementType': 'all',
+            'stylers': [{'visibility':'off'}]
+        }, {
+            'featureType': 'landscape',
+            'elementType': 'geometry',
+            'stylers': [{'visibility': 'on'}, {'color': '#fcfcfc'}]
+        }, {
+            'featureType': 'water',
+            'elementType': 'labels',
+            'stylers': [{'visibility': 'on'},{'hue': '#5f94ff'}, {'lightness': 60}]   
+        }];
+        }                                                   
+    </script>
+    <script async defer
+            src = "https://maps.googleapis.com/maps/api/js?key=KEYGOESHERE&callback=initMap">
+        </script>
     <h2>Cases by state data</h2>
         <table id="cases">
             <tr>
@@ -35,6 +74,7 @@
                 <th>Bar/Restaurant Limits</th>
                 <th>Primary Election Postponement</th>
                 <th>Emergency Declaration</th>
+               
             </tr>
             {% for row in range(2,policies_by_state|length) %}
                 <tr>
@@ -45,3 +85,4 @@
             {% endfor %}
     </table>
 </body>
+</html>
