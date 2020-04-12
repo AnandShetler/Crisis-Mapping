@@ -66,9 +66,8 @@
     <div id="controls" class="nicebox">
         <div>
         <select id="census-variable">
-          <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0066PE">Percent of population over 25 that completed high
-          school</option>
-          <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0017E">Median age</option>
+          <option value="{{ num_of_cases_map|tojson }}">Number of COVID-19 Cases</option>
+          <option value="{{ cases_per_mil_map|tojson }}">Cases per 1 Million</option>
           <option value="https://storage.googleapis.com/mapsdevsite/json/DP05_0001E">Total population</option>
           <option value="https://storage.googleapis.com/mapsdevsite/json/DP02_0016E">Average family size</option>
           <option value="https://storage.googleapis.com/mapsdevsite/json/DP03_0088E">Per-capita income</option>
@@ -129,49 +128,37 @@
   
       
         function loadMapShapes() {
-        
-          map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/states.js', { idPropertyName: 'STATE' });
-  
-          
-          google.maps.event.addListenerOnce(map.data, 'addfeature', function() {
-            google.maps.event.trigger(document.getElementById('census-variable'),
-                'change');
-          });
+            map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/states.js', { idPropertyName: 'STATE' },
+                function() {
+                    google.maps.event.addListenerOnce(map.data, 'addfeature');
+                    google.maps.event.trigger(document.getElementById('census-variable'),'change');
+                }
+            );
         }
   
 
-        function loadCensusData(variable) {
-          
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', variable + '.json');
-          xhr.onload = function() {
-            var censusData = JSON.parse(xhr.responseText);
-            censusData.shift(); 
+        function loadCensusData(map_data) {
+            console.log(map_data);
+            var censusData = JSON.parse(map_data);
             censusData.forEach(function(row) {
-              var censusVariable = parseFloat(row[0]);
-              var stateId = row[1];
-  
-              
-              if (censusVariable < censusMin) {
-                censusMin = censusVariable;
-              }
-              if (censusVariable > censusMax) {
-                censusMax = censusVariable;
-              }
-  
-              
-              map.data
+                var censusVariable = row[1];
+                var stateId = row[0];
+
+                if (censusVariable < censusMin) {
+                    censusMin = censusVariable;
+                }
+                if (censusVariable > censusMax) {
+                    censusMax = censusVariable;
+                }
+                
+                map.data
                 .getFeatureById(stateId)
                 .setProperty('census_variable', censusVariable);
             });
   
             
-            document.getElementById('census-min').textContent =
-                censusMin.toLocaleString();
-            document.getElementById('census-max').textContent =
-                censusMax.toLocaleString();
-          };
-          xhr.send();
+            document.getElementById('census-min').textContent = censusMin.toLocaleString();
+            document.getElementById('census-max').textContent = censusMax.toLocaleString();
         }
   
         function clearCensusData() {
@@ -186,8 +173,8 @@
   
 
         function styleFeature(feature) {
-          var low = [5, 69, 54];  
-          var high = [151, 83, 34];   
+          var high = [5, 69, 54];  
+          var low = [151, 83, 34];   
   
          
           var delta = (feature.getProperty('census_variable') - censusMin) /
