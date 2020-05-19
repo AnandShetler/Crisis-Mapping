@@ -12,6 +12,9 @@
         <select id="census-variable">
           <option value="{{ num_of_cases_map|tojson }}">Number of COVID-19 Cases</option>
           <option value="{{ cases_per_mil_map|tojson }}">Cases per 1 Million</option>
+          {% for policy, data in policies_map_data.items() %}
+            <option value="{{ data|tojson }}">{{ policy }}</option>
+          {% endfor %}
         </select>
         </div>
         <div id="legend">

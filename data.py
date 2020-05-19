@@ -26,11 +26,8 @@ def gen_map_data(cases_table, col, policies_table=False):
     ret = []
     if policies_table:
         for i in range(3,len(policies_table)):
-            ret.append([geo_id_dict[cases_table[i][0]],float(cases_table[i][2]) if not policies_table[i][col] == "-" else -1])
+            ret.append([geo_id_dict[cases_table[i][0]],1 if policies_table[i][col] == "-" else 0])
     else:
         for i in range(3,len(cases_table)):
             ret.append([geo_id_dict[cases_table[i][0]],float(cases_table[i][col].replace(",",""))])
     return ret
-
-# pprint(gen_map_data(get_sheet_data('1BDbzCX0-m673QatijTXJhq7dh9p1RriQmUfBcUmbvZg', 'A1:E54'),3))
-print(get_state_policies_key())
