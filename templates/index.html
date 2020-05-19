@@ -180,16 +180,9 @@
     <h2>Policies by state data</h2>
     <table id="policies">
         <tr>
-            <th>Name</th>
-            <th>Stay At Home Order</th>
-            <th>Mandatory Quarantine for Travelers</th>
-            <th>Non-Essential Business Closures</th>
-            <th>Large Gatherings Ban</th>
-            <th>State-Mandated School Closures</th>
-            <th>Bar/Restaurant Limits</th>
-            <th>Primary Election Postponement</th>
-            <th>Emergency Declaration</th>
-            
+            {% for heading in range(0,policies_by_state[0]|length) %}
+                <th>{{ policies_by_state[0][heading] }}</th>
+            {% endfor %}
         </tr>
         {% for row in range(2,policies_by_state|length) %}
             <tr>

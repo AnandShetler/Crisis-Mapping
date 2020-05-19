@@ -33,3 +33,4 @@ def gen_map_data(cases_table, col, policies_table=False):
     return ret
 
 # pprint(gen_map_data(get_sheet_data('1BDbzCX0-m673QatijTXJhq7dh9p1RriQmUfBcUmbvZg', 'A1:E54'),3))
+print(get_state_policies_key())
