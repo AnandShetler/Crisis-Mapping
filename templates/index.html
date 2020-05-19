@@ -1,66 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>                                                  <!--API 2 used**--> 
+<head>
     <title>Crisis Response Mapping</title>
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-    <style>
-        html, body, #map { height:400px;
-                     margin:0;
-                     padding:0;}
-        .nicebox{
-          position: static;
-          left:20px;
-          width: 250px;
-          text-align: center;
-          font-family: "Roboto", "Arial", sans-serif;
-          font-size: 13px;
-          z-index: 5;
-          box-shadow: 0 4px 6px -4px #333;
-          padding: 5px 10px;
-          background: rgb(255,255,255);
-          background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%);
-          border: rgb(229, 229, 229) 1px solid;
-        }
-        #controls {
-          top: 10px;
-          left: 110px;
-          width: 360px;
-          height: 45px;
-        }
-        #data-box {
-          top: 10px;
-          left: 500px;
-          height: 45px;
-          line-height: 45px;
-          display: none;
-        }
-        #census-variable {
-          width: 360px;
-          height: 20px;
-        }
-        #legend { display: flex; display: -webkit-box; padding-top: 7px }
-        .color-key {
-          background: linear-gradient(to left,
-            hsl(5, 69%, 54%) 0%,
-            hsl(29, 71%, 51%) 17%,
-            hsl(54, 74%, 47%) 33%,
-            hsl(78, 76%, 44%) 50%,
-            hsl(102, 78%, 41%) 67%,
-            hsl(127, 81%, 37%) 83%,
-            hsl(151, 83%, 34%) 100%);
-          flex: 1;
-          -webkit-box-flex: 1;
-          margin: 0 5px;
-          text-align: left;
-          font-size: 1.0em;
-          line-height: 1.0em;
-        }
-        #data-value { font-size: 2.0em; font-weight: bold }
-        #data-label { font-size: 2.0em; font-weight: normal; padding-right: 10px; }
-        #data-label:after { content: ':' }
-        #data-caret { margin-left: -5px; display: none; font-size: 14px; width: 14px}
-    </style>   
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
 </head>
 <body style="background-color:#1a8cff;">
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
@@ -99,32 +41,24 @@
         var censusMin = Number.MAX_VALUE, censusMax = -Number.MAX_VALUE;
   
         function initMap() {
-  
-        
           map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 40, lng: -100},
             zoom: 4,
             styles: mapStyle
           });
-  
-  
-          
+
           map.data.setStyle(styleFeature);
           map.data.addListener('mouseover', mouseInToRegion);
           map.data.addListener('mouseout', mouseOutOfRegion);
-  
-         
+
           var selectBox = document.getElementById('census-variable');
           google.maps.event.addDomListener(selectBox, 'change', function() {
             clearCensusData();
             loadCensusData(selectBox.options[selectBox.selectedIndex].value);
           });
-  
-          
+
           loadMapShapes();
-  
         }
-  
       
         function loadMapShapes() {
             map.data.loadGeoJson('https://storage.googleapis.com/mapsdevsite/json/states.js', { idPropertyName: 'STATE' },
@@ -134,7 +68,6 @@
                 }
             );
         }
-  
 
         function loadCensusData(map_data) {
             console.log(map_data);
@@ -155,7 +88,6 @@
                 .setProperty('census_variable', censusVariable);
             });
   
-            
             document.getElementById('census-min').textContent = censusMin.toLocaleString();
             document.getElementById('census-max').textContent = censusMax.toLocaleString();
         }
@@ -170,12 +102,10 @@
           document.getElementById('data-caret').style.display = 'none';
         }
   
-
         function styleFeature(feature) {
           var high = [5, 69, 54];  
           var low = [151, 83, 34];   
   
-         
           var delta = (feature.getProperty('census_variable') - censusMin) /
               (censusMax - censusMin);
   
@@ -185,7 +115,6 @@
             color[i] = (high[i] - low[i]) * delta + low[i];
           }
   
-        
           var showRow = true;
           if (feature.getProperty('census_variable') == null ||
               isNaN(feature.getProperty('census_variable'))) {
@@ -214,7 +143,6 @@
           var percent = (e.feature.getProperty('census_variable') - censusMin) /
               (censusMax - censusMin) * 100;
   
-
           document.getElementById('data-label').textContent =
               e.feature.getProperty('NAME');
           document.getElementById('data-value').textContent =
@@ -225,13 +153,12 @@
         }
   
         function mouseOutOfRegion(e) {
-  
           e.feature.setProperty('state', 'normal');
         }
   
       </script>
       <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+          src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap">
       </script>
     <h2>Cases by state data</h2>
         <table id="cases">
@@ -252,25 +179,25 @@
         </table>
     <h2>Policies by state data</h2>
     <table id="policies">
+        <tr>
+            <th>Name</th>
+            <th>Stay At Home Order</th>
+            <th>Mandatory Quarantine for Travelers</th>
+            <th>Non-Essential Business Closures</th>
+            <th>Large Gatherings Ban</th>
+            <th>State-Mandated School Closures</th>
+            <th>Bar/Restaurant Limits</th>
+            <th>Primary Election Postponement</th>
+            <th>Emergency Declaration</th>
+            
+        </tr>
+        {% for row in range(2,policies_by_state|length) %}
             <tr>
-                <th>Name</th>
-                <th>Stay At Home Order</th>
-                <th>Mandatory Quarantine for Travelers</th>
-                <th>Non-Essential Business Closures</th>
-                <th>Large Gatherings Ban</th>
-                <th>State-Mandated School Closures</th>
-                <th>Bar/Restaurant Limits</th>
-                <th>Primary Election Postponement</th>
-                <th>Emergency Declaration</th>
-               
+                {% for i in policies_by_state[row] %}
+                    <td>{{ i }}</td>
+                {% endfor %}
             </tr>
-            {% for row in range(2,policies_by_state|length) %}
-                <tr>
-                    {% for i in policies_by_state[row] %}
-                        <td>{{ i }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
+        {% endfor %}
     </table>
 </body>
 </html>
