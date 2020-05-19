@@ -10,7 +10,6 @@ def home_page():
     policies_map_data = {}
     for p in range(1,len(policies_by_state_table[0])):
         policies_map_data[policies_by_state_table[0][p]] = data.gen_map_data(cases_by_state_table,p,policies_by_state_table)
-    print(policies_map_data)
     return render_template(
         "index.html", 
         cases_by_state=cases_by_state_table,
