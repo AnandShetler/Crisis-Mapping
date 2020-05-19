@@ -3,6 +3,36 @@
 <head>
     <title>Crisis Response Mapping</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"> 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart () {
+        var data = google.visualization.arrayToDataTable([
+        ['Month', 'Cases', 'Deaths'],
+          ['Jan',  1000,      400],
+          ['Feb',  1170,      460],
+          ['Mar',  660,       1120],
+          ['Apr',  1030,      540],
+          ['May',  660,       1120],
+          ['Jun',  660,       1120],
+          ['Jul',  660,       1120],
+          ['Aug',  660,       1120],
+          ['Sep',  660,       1120],
+          ['Oct',  660,       1120],
+          ['Nov',  660,       1120],
+          ['Dec',  660,       1120]
+      ]);
+        var options = {
+          title: 'Number of COVID-19 Cases',
+          hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
 </head>
 <body style="background-color:#1a8cff;">
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
@@ -28,6 +58,7 @@
         <span id="data-value"></span>
       </div>
       <div id="map"></div>
+      <div id="chart_div" style="width: 100%; height: 500px;"></div>
       <script>
         var mapStyle = [{
           'stylers': [{'visibility': 'off'}]
