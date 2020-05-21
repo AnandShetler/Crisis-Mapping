@@ -6,32 +6,22 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart () {
-        var data = google.visualization.arrayToDataTable([
-        ['Month', 'Cases', 'Deaths'],
-          ['Jan',  1000,      400],
-          ['Feb',  1170,      460],
-          ['Mar',  660,       1120],
-          ['Apr',  1030,      540],
-          ['May',  660,       1120],
-          ['Jun',  660,       1120],
-          ['Jul',  660,       1120],
-          ['Aug',  660,       1120],
-          ['Sep',  660,       1120],
-          ['Oct',  660,       1120],
-          ['Nov',  660,       1120],
-          ['Dec',  660,       1120]
-      ]);
+      google.charts.setOnLoadCallback((function() { drawChart(document.getElementById("chart-variable").value) }));
+      function drawChart (data) {
+        var data = google.visualization.arrayToDataTable(eval(data));
         var options = {
-          title: 'Number of COVID-19 Cases',
-          hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
+          title: 'Average New Daily Cases per 1 million',
+          hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
           vAxis: {minValue: 0}
         };
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+
+      document.addEventListener('input', function(event) {
+        if (event.target.id !== 'chart-variable') return;
+        drawChart(event.target.value);
+      }, false);
     </script>
 </head>
 <body style="background-color:#1a8cff;">
@@ -59,6 +49,11 @@
       </div>
       <div id="map"></div>
       <div id="chart_div" style="width: 100%; height: 500px;"></div>
+      <select id="chart-variable">
+        {% for policy, data in policies_graph_data.items() %}
+          <option value='{{ data|tojson }}'>{{ policy }}</option>
+        {% endfor %}
+      </select>
       <script>
         var mapStyle = [{
           'stylers': [{'visibility': 'off'}]
@@ -104,7 +99,6 @@
         }
 
         function loadCensusData(map_data) {
-            console.log(map_data);
             var censusData = JSON.parse(map_data);
             censusData.forEach(function(row) {
                 var censusVariable = row[1];
@@ -192,7 +186,7 @@
   
       </script>
       <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=KEY&callback=initMap">
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyD-TnLvjU-FdImLIDBA8NhOKMP9n0x44&callback=initMap">
       </script>
     <h2>Cases by state data</h2>
         <table id="cases">
