@@ -23,46 +23,6 @@
         drawChart(event.target.value);
       }, false);
     </script>
-    //
-    <style>
-      .accordion {
-        background-color: rgb(10, 68, 155);
-        color: white;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-        transition: 0.4s;
-      }
-      
-      .active, .accordion:hover {
-        background-color: #ccc;
-      }
-      
-      .accordion:after {
-        content: '\002B';
-        color: white;
-        font-weight: bold;
-        float: right;
-        margin-left: 5px;
-      }
-      
-      .active:after {
-        content: "\2212";
-      }
-      
-      .panel {
-        padding: 0 18px;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-      }
-    </style>
-    //
 </head>
 <body style="background-color:#1a8cff;">
     <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
@@ -228,26 +188,44 @@
       <script async defer
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyD-TnLvjU-FdImLIDBA8NhOKMP9n0x44&callback=initMap">
       </script>
-    <h2>Cases by state data</h2>
-    //
+    <h2>Raw Data Tables</h2>
     <button class="accordion">Cases By State</button>
     <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-
-    <button class="accordion">Testing By State</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-
-    <button class="accordion">Deaths By State</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <table id="cases">
+        <tr>
+            <th>Name</th>
+            <th>Number of COVID-19 Cases</th>
+            <th>Cases per 1,000,000</th>
+            <th>Deaths from COVID-19</th>
+            <th>Deaths per 1,000,000</th>
+        </tr>
+        {% for row in range(2,cases_by_state|length) %}
+            <tr>
+                {% for i in cases_by_state[row] %}
+                    <td>{{ i }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
     </div>
 
     <button class="accordion">Policies By State</button>
     <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h2>Policies by state data</h2>
+      <table id="policies">
+          <tr>
+              {% for heading in range(0,policies_by_state[0]|length) %}
+                  <th>{{ policies_by_state[0][heading] }}</th>
+              {% endfor %}
+          </tr>
+          {% for row in range(2,policies_by_state|length) %}
+              <tr>
+                  {% for i in policies_by_state[row] %}
+                      <td>{{ i }}</td>
+                  {% endfor %}
+              </tr>
+          {% endfor %}
+      </table>
     </div>
 
     <script>
@@ -266,37 +244,5 @@
       });
     }
     </script>
-    //
-        <table id="cases">
-            <tr>
-                <th>Name</th>
-                <th>Number of COVID-19 Cases</th>
-                <th>Cases per 1,000,000</th>
-                <th>Deaths from COVID-19</th>
-                <th>Deaths per 1,000,000</th>
-            </tr>
-            {% for row in range(2,cases_by_state|length) %}
-                <tr>
-                    {% for i in cases_by_state[row] %}
-                        <td>{{ i }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
-    <h2>Policies by state data</h2>
-    <table id="policies">
-        <tr>
-            {% for heading in range(0,policies_by_state[0]|length) %}
-                <th>{{ policies_by_state[0][heading] }}</th>
-            {% endfor %}
-        </tr>
-        {% for row in range(2,policies_by_state|length) %}
-            <tr>
-                {% for i in policies_by_state[row] %}
-                    <td>{{ i }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-    </table>
 </body>
 </html>
