@@ -51,12 +51,12 @@ def state_cases_over_time():
     return out
 
 def gen_policy_chart_data(policy_index, policy_table, state_cases_dx):
-    occurrences = { "No Action": 0, "All States": 50 }
-    table_dict = { "Date": state_cases_dx["Date"], "No Action": [0 for x in range(0, len(state_cases_dx["Alaska"]))], "All States": [0 for x in range(0, len(state_cases_dx["Alaska"]))] }
+    occurrences = { "No Action": 0, "Overall Average": 50 }
+    table_dict = { "Date": state_cases_dx["Date"], "No Action": [0 for x in range(0, len(state_cases_dx["Alaska"]))], "Overall Average": [0 for x in range(0, len(state_cases_dx["Alaska"]))] }
     for i in range(3, len(policy_table)):
         case = policy_table[i][policy_index]
         state = policy_table[i][0]
-        table_dict["All States"] = list(map(lambda x,y: x+(y*1000000/population_dict[state]), table_dict["All States"], state_cases_dx[state]))
+        table_dict["Overall Average"] = list(map(lambda x,y: x+(y*1000000/population_dict[state]), table_dict["Overall Average"], state_cases_dx[state]))
         if case in occurrences:
             occurrences[case] += 1
             table_dict[case] = list(map(lambda x,y: x+(y*1000000/population_dict[state]), table_dict[case], state_cases_dx[state]))
