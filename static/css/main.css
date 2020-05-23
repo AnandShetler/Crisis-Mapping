@@ -15,6 +15,9 @@ h2 {
 img {
     float: left;
 }
+p {
+    padding: 18px;
+}
 a, a:visited {
     color: lightblue;
 }
@@ -49,7 +52,7 @@ td {
 .nicebox{
     position: static;
     left:20px;
-    width: 250px;
+    width: 400px;
     text-align: center;
     font-family: "Roboto", "Arial", sans-serif;
     font-size: 13px;
@@ -85,14 +88,14 @@ td {
     color: black;
 }
 .color-key {
-background: linear-gradient(to left,
-    hsl(5, 69%, 54%) 0%,
-    hsl(29, 71%, 51%) 17%,
-    hsl(54, 74%, 47%) 33%,
-    hsl(78, 76%, 44%) 50%,
-    hsl(102, 78%, 41%) 67%,
-    hsl(127, 81%, 37%) 83%,
-    hsl(151, 83%, 34%) 100%);
+    background: linear-gradient(to left,
+                                hsl(5, 69%, 54%) 0%,
+                                hsl(29, 71%, 51%) 17%,
+                                hsl(54, 74%, 47%) 33%,
+                                hsl(78, 76%, 44%) 50%,
+                                hsl(102, 78%, 41%) 67%,
+                                hsl(127, 81%, 37%) 83%,
+                                hsl(151, 83%, 34%) 100%);
     flex: 1;
     -webkit-box-flex: 1;
     margin: 0 5px;
@@ -157,8 +160,11 @@ background: linear-gradient(to left,
 
 footer {
     text-align: center;
-    padding: 15px;
     background-color: rgb(10, 68, 155);
     color: white;
     margin-top: 20px;
+    padding: 18px;
+}
+footer p {
+    padding: 0;
 }
