@@ -133,7 +133,7 @@ td {
 #dop {
     width: 100%;
     background-color: white;
-    padding: 20px;
+    padding: 20px 0;
 }
 #dop select {
     margin: auto;
