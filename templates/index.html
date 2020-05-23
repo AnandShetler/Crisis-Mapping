@@ -173,10 +173,17 @@
           var percent = (e.feature.getProperty('census_variable') - censusMin) /
               (censusMax - censusMin) * 100;
   
-          document.getElementById('data-label').textContent =
-              e.feature.getProperty('NAME');
-          document.getElementById('data-value').textContent =
-              e.feature.getProperty('census_variable').toLocaleString();
+          document.getElementById('data-label').textContent = e.feature.getProperty('NAME');
+          var val = e.feature.getProperty('census_variable').toLocaleString();
+          if (val == "0") {
+            document.getElementById('data-value').textContent = "Implemented";
+          }
+          else if (val == "1") {
+            document.getElementById('data-value').textContent = "No Action";
+          }
+          else {
+            document.getElementById('data-value').textContent = val;
+          }
           document.getElementById('data-box').style.display = 'block';
           document.getElementById('data-caret').style.display = 'block';
           document.getElementById('data-caret').style.paddingLeft = percent + '%';
