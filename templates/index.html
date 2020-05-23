@@ -50,12 +50,12 @@
       <div id="map"></div>
       <p>This map gives an overall view of the state of the country. The dropdown above the map allows you to select the data displayed in the map. You can view the number of cases in each state, cases per 1 million residents in each state, or which states have the listed anti COVID-19 policies implemented in some form.</p>
       <div id="chart_div" style="width: 100%; height: 500px;"></div>
-      <p>The chart displayed above shows the general trend of how the listed anti COVID-19 policies are affecting the average new daily cases of COVID-19 per 1 million US citizens. Note that generally states with more new cases per day are more likely to implement these policies, and the effectiveness of these policies is seen in the decrease of new cases per day. The states which do or do not have these policies implemented in some fashion are displayed below in the "Policies By State" data table.</p>
       <select id="chart-variable">
         {% for policy, data in policies_graph_data.items() %}
           <option value='{{ data|tojson }}'>{{ policy }}</option>
         {% endfor %}
       </select>
+      <p>The chart displayed above shows the general trend of how the listed anti COVID-19 policies are affecting the average new daily cases of COVID-19 per 1 million US citizens. Note that generally states with more new cases per day are more likely to implement these policies, and the effectiveness of these policies is seen in the decrease of new cases per day. The states which do or do not have these policies implemented in some fashion are displayed below in the "Policies By State" data table.</p>
       <script>
         var mapStyle = [{
           'stylers': [{'visibility': 'off'}]
