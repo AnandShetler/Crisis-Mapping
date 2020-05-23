@@ -26,8 +26,9 @@
     </script>
 </head>
 <body style="background-color:#1a8cff;">
-    <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
-    <h1>Crisis Response Mapping</h1>
+    <!-- <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
+    <h1>Crisis Response Mapping</h1> -->
+    <img id="headerimg" src="{{ url_for('static', filename='images/TitleHeader.png') }}" />
     <div id="controls" class="nicebox">
         <div>
         <select id="census-variable">
@@ -51,11 +52,13 @@
       <div id="map"></div>
       <p>This map gives an overall view of the state of the country. The dropdown above the map allows you to select the data displayed in the map. You can view the number of cases in each state, cases per 1 million residents in each state, or which states have the listed anti COVID-19 policies implemented in some form.</p>
       <div id="chart_div" style="width: 100%; height: 500px;"></div>
-      <select id="chart-variable">
-        {% for policy, data in policies_graph_data.items() %}
-          <option value='{{ data|tojson }}'>{{ policy }}</option>
-        {% endfor %}
-      </select>
+      <div id="dop">
+        <select id="chart-variable">
+          {% for policy, data in policies_graph_data.items() %}
+            <option value='{{ data|tojson }}'>{{ policy }}</option>
+          {% endfor %}
+        </select>
+      </div>
       <p>The chart displayed above shows the general trend of how the listed anti COVID-19 policies are affecting the average new daily cases of COVID-19 per 1 million US citizens. Note that generally states with more new cases per day are more likely to implement these policies, and the effectiveness of these policies is seen in the decrease of new cases per day. The states which do or do not have these policies implemented in some fashion are displayed below in the "Policies By State" data table.</p>
       <script>
         var mapStyle = [{
@@ -255,6 +258,7 @@
     </script>
     <footer>
       <p>This site was created by Anand Shetler, Chloe Bautista, Tristan Bacani, and Nixon Puertollano. It is completely open source and you can view or contribute to our code <a href="https://github.com/AnandShetler/Crisis-Mapping">here</a>. We are well aware that it is not perfect so any and all contributions are much appreciated!</p>
+      <p>Any questions or suggestions, please email <a href="mailto:anandshetler@gmail.com">anandshetler@gmail.com</a></p>
       <p>The policy data used is collected and maintained by the <a href="https://www.kff.org/health-costs/issue-brief/state-data-and-policy-actions-to-address-coronavirus/">Kaiser Family Foundation</a> and day by day case data is from <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins University</a>.</p>
     </footer>
 </body>
