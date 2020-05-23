@@ -18,51 +18,32 @@ img {
 a, a:visited {
     color: lightblue;
 }
-#cases {
+#cases, #policies {
     font-family: "Trebuchet MS";
     border-collapse: collapse;
     width: 100%;
 }
 
-#cases td, #cases th {
+td, th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#cases tr:nth-child(even){background-color: #f2f2f26c;}
+tr:nth-child(even){background-color: #f2f2f26c;}
 
-#cases tr:nth-child(odd){background-color: #f2f2f227;}
+tr:nth-child(odd){background-color: #f2f2f227;}
 
-#cases tr:hover {background-color: #ddd;}
+tr:hover {background-color: #ddd;}
 
-#cases th {
+th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     background-color: rgb(10, 68, 155);
 }
-#policies {
-    font-family: "Trebuchet MS";
-    border-collapse: collapse;
-    width: 100%;
-}
 
-#policies td, #policies th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#policies tr:nth-child(even){background-color: #f2f2f26c;}
-
-#policies tr:nth-child(odd){background-color: #f2f2f227;}
-
-#policies tr:hover {background-color: #ddd;}
-
-#policies th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: rgb(10, 68, 155);
+td {
+    color: black;
 }
 
 .nicebox{
