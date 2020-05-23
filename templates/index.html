@@ -7,13 +7,17 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback((function() { drawChart(document.getElementById("chart-variable").value) }));
-      function drawChart (data) {
+      
+      google.charts.setOnLoadCallback((function() { 
+        var dropdown = document.getElementById("chart-variable");
+        drawChart(document.getElementById("chart-variable").value,dropdown.options[dropdown.selectedIndex].text) 
+      }));
+      function drawChart (data,title) {
         var data = google.visualization.arrayToDataTable(eval(data));
         var options = {
-          title: 'Average New Daily Cases per 1 million',
+          title: title,
           hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0}
+          vAxis: {title: 'Average New Daily Cases per 1 million', minValue: 0}
         };
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -21,21 +25,20 @@
 
       document.addEventListener('input', function(event) {
         if (event.target.id !== 'chart-variable') return;
-        drawChart(event.target.value);
+        var dropdown = document.getElementById("chart-variable");
+        drawChart(event.target.value,dropdown.options[dropdown.selectedIndex].text);
       }, false);
     </script>
 </head>
 <body style="background-color:#1a8cff;">
-    <!-- <img src="{{ url_for('static', filename='images/logo.jpg') }}" height="50" width ="50">  
-    <h1>Crisis Response Mapping</h1> -->
     <img id="headerimg" src="{{ url_for('static', filename='images/TitleHeader.png') }}" />
     <div id="controls" class="nicebox">
         <div>
         <select id="census-variable">
-          <option value="{{ num_of_cases_map|tojson }}">Number of COVID-19 Cases</option>
-          <option value="{{ cases_per_mil_map|tojson }}">Cases per 1 Million</option>
+          <option class="cases-map-data" value="{{ num_of_cases_map|tojson }}">Number of COVID-19 Cases</option>
+          <option class="cases-map-data" value="{{ cases_per_mil_map|tojson }}">Cases per 1 Million</option>
           {% for policy, data in policies_map_data.items() %}
-            <option value="{{ data|tojson }}">{{ policy }}</option>
+            <option class="policy-map-data" value="{{ data|tojson }}">{{ policy }}</option>
           {% endfor %}
         </select>
         </div>
