@@ -2,7 +2,6 @@ gunicorn
 Flask
 pandas
 setuptools
-setuptools==40.3.0
 beautifulsoup4
 google-api-python-client
 google-auth-httplib2
