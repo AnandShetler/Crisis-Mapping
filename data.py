@@ -23,15 +23,23 @@ def get_state_policies_key():
     tables = soup.find_all('div', attrs={'data-app-js':re.compile("[\{]")})
     return json.loads(tables[3]['data-app-js'])['gdocs_key']
 
+# if no policy_table then returns list of [geo id, number value] pairs
+# if policy_table exists then returns list of [list of policy names, list of [geo id, index of associated policy type] pairs]
 def gen_map_data(cases_table, col, policies_table=False):
     ret = []
     if policies_table:
+        names = policies_table[2][col].split("; ")
+        for i in range(0,len(names)):
+            x = names[i].replace("Grace Period Extended for ","")
+            names[i] = x[:(x.index("(")-1)]
         for i in range(3,len(policies_table)):
-            ret.append([geo_id_dict[cases_table[i][0]],1 if policies_table[i][col] == "-" else 0])
+            str = policies_table[i][col] if not "Proposed" in policies_table[i][col] else "Proposed"
+            ret.append([geo_id_dict[cases_table[i][0]],len(names)-1 if str == "-" else names.index(str)])
+        return [names, ret]
     else:
         for i in range(3,len(cases_table)):
             ret.append([geo_id_dict[cases_table[i][0]],float(cases_table[i][col].replace(",",""))])
-    return ret
+        return ret
 
 # returns dict of state : [new cases from 1/22 to most recent]
 def state_cases_over_time():

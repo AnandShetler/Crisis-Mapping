@@ -76,7 +76,7 @@ td {
 #controls {
     top: 10px;
     left: 110px;
-    width: 360px;
+    width: 400px;
     height: 45px;
 }
 #data-box {
@@ -113,11 +113,11 @@ td {
     line-height: 1.0em;
 }
 #data-value { 
-    font-size: 2.0em; 
+    font-size: 1.2em; 
     font-weight: bold 
 }
 #data-label { 
-    font-size: 2.0em; 
+    font-size: 1.2em; 
     font-weight: normal; 
     padding-right: 10px; 
 }

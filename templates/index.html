@@ -13,7 +13,7 @@
         drawChart(document.getElementById("chart-variable").value,dropdown.options[dropdown.selectedIndex].text) 
       }));
       function drawChart (data,title) {
-        var data = google.visualization.arrayToDataTable(eval(data));
+        var data = google.visualization.arrayToDataTable(JSON.parse(data));
         var options = {
           title: title,
           hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
@@ -38,7 +38,7 @@
           <option class="cases-map-data" value="{{ num_of_cases_map|tojson }}">Number of COVID-19 Cases</option>
           <option class="cases-map-data" value="{{ cases_per_mil_map|tojson }}">Cases per 1 Million</option>
           {% for policy, data in policies_map_data.items() %}
-            <option class="policy-map-data" value="{{ data|tojson }}">{{ policy }}</option>
+            <option class="policy-map-data" names='{{ data[0]|tojson }}' value="{{ data[1]|tojson }}">{{ policy }}</option>
           {% endfor %}
         </select>
         </div>
@@ -182,11 +182,10 @@
   
           document.getElementById('data-label').textContent = e.feature.getProperty('NAME');
           var val = e.feature.getProperty('census_variable').toLocaleString();
-          if (val == "0") {
-            document.getElementById('data-value').textContent = "Implemented";
-          }
-          else if (val == "1") {
-            document.getElementById('data-value').textContent = "No Action";
+          var dropdown = document.getElementById("census-variable");
+          var option = dropdown.options[dropdown.selectedIndex];
+          if (option.className == "policy-map-data") {
+            document.getElementById('data-value').textContent = JSON.parse(option.getAttribute("names"))[parseInt(val)];
           }
           else {
             document.getElementById('data-value').textContent = val;
