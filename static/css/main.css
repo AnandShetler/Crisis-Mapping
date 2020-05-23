@@ -2,18 +2,21 @@ html, body, #map {
     height:400px;
     margin:0;
     padding:0;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 h1 {
-    color: white;
     font-family: verdana;
     font-size: 300%;
 }
 h2 {
-    color: white;
     font-family: verdana;
 }
 img {
     float: left;
+}
+a, a:visited {
+    color: lightblue;
 }
 #cases {
     font-family: "Trebuchet MS";
@@ -37,7 +40,6 @@ img {
     padding-bottom: 12px;
     text-align: left;
     background-color: rgb(10, 68, 155);
-    color: white;
 }
 #policies {
     font-family: "Trebuchet MS";
@@ -61,7 +63,6 @@ img {
     padding-bottom: 12px;
     text-align: left;
     background-color: rgb(10, 68, 155);
-    color: white;
 }
 
 .nicebox{
@@ -77,6 +78,7 @@ img {
     background: rgb(255,255,255);
     background: linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(245,245,245,1) 100%);
     border: rgb(229, 229, 229) 1px solid;
+    color: black;
 }
 #controls {
     top: 10px;
@@ -98,7 +100,8 @@ img {
 #legend { 
     display: flex; 
     display: -webkit-box; 
-    padding-top: 7px 
+    padding-top: 7px;
+    color: black;
 }
 .color-key {
 background: linear-gradient(to left,
@@ -169,4 +172,12 @@ background: linear-gradient(to left,
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: rgb(10, 68, 155);
+    color: white;
+    margin-top: 20px;
 }
